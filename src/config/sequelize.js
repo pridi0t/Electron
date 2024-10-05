@@ -1,20 +1,10 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize } = require("sequelize");
 const path = require("path");
 
 // SQLite DB 초기화
 const sequelize = new Sequelize({
     dialect: "sqlite",
-    storage: path.join(__dirname, "../db", "notes.db")
-});
-
-// 노트 모델 정의
-const Note = sequelize.define("Note", {
-    content: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    }
-}, {
-    tableName: "notes"
+    storage: path.join(__dirname, "../db", "notes.db"),
 });
 
 // DB와 테이블 동기화
@@ -29,4 +19,4 @@ async function initDB() {
     }
 }
 
-module.exports = { sequelize, Note, initDB };
+module.exports = { sequelize, initDB };

@@ -1,9 +1,11 @@
-const { Note } = require("../config/sequelize");
+const Note = require("../db/note");
 
 // 노트 저장
 async function saveNote(note) {
+    const { title, content } = note;
     try {
-        return await Note.create({ content: note });
+        await Note.create({ title, content });
+        return true;
     } catch (err) {
         console.error("[ERROR/DB] saveNote Error", err);
         throw err;
@@ -13,8 +15,7 @@ async function saveNote(note) {
 // 노트 로드
 async function loadNotes() {
     try {
-        const notes= await Note.findAll();
-        return notes.map((note) => note.content);
+        return await Note.findAll();
     } catch (err) {
         console.error("[ERROR/DB] loadNotes Error", err);
         throw err;

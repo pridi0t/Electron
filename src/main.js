@@ -1,8 +1,8 @@
 // app: 애플리케이션의 생명 주기 관리
 // BrowserWindow : 창 생성시 사용
 const { app, BrowserWindow, ipcMain } = require("electron");
-const { saveNote, loadNotes } = require("./controllers/noteController");
 const { initDB } = require("./config/sequelize");
+const { saveNote, loadNotes } = require("./controllers/noteController");
 const path = require("path");
 
 // 애플리케이션이 준비 되었을 때 (이벤트 발생)
