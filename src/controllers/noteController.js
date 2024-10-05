@@ -1,4 +1,4 @@
-const { Note } = require("../db/sequelize");
+const { Note } = require("../config/sequelize");
 
 // 노트 저장
 async function saveNote(note) {

@@ -2,7 +2,7 @@
 // BrowserWindow : 창 생성시 사용
 const { app, BrowserWindow, ipcMain } = require("electron");
 const { saveNote, loadNotes } = require("./controllers/noteController");
-const { initDB } = require("./db/sequelize");
+const { initDB } = require("./config/sequelize");
 const path = require("path");
 
 // 애플리케이션이 준비 되었을 때 (이벤트 발생)
@@ -23,7 +23,7 @@ app.on("ready", async() => {
     });
 
     // index.html 파일 로드
-    win.loadFile(path.join(__dirname, "public", "views", "index.html"));
+    win.loadFile(path.join(__dirname, "public", "index.html"));
     
     // 개발자 도구 열기
     win.webContents.openDevTools();

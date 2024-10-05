@@ -4,7 +4,7 @@ const path = require("path");
 // SQLite DB 초기화
 const sequelize = new Sequelize({
     dialect: "sqlite",
-    storage: path.join(__dirname, "notes.db")
+    storage: path.join(__dirname, "../db", "notes.db")
 });
 
 // 노트 모델 정의
