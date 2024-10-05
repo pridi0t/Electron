@@ -2,7 +2,7 @@
 // BrowserWindow : 창 생성시 사용
 const { app, BrowserWindow, ipcMain } = require("electron");
 const { initDB } = require("./config/sequelize");
-const { saveNote, loadNotes } = require("./controllers/noteController");
+const { saveNote, loadTitleList, loadNoteContent } = require("./controllers/noteController");
 const path = require("path");
 
 // 애플리케이션이 준비 되었을 때 (이벤트 발생)
@@ -52,7 +52,12 @@ ipcMain.handle("saveNote", async(event, note) => {
     return await saveNote(note);
 });
 
-// 노트 로드
-ipcMain.handle("loadNotes", async() => {
-    return await loadNotes();
+// 노트의 제목 리스트 로드
+ipcMain.handle("loadTitleList", async() => {
+    return await loadTitleList();
+});
+
+// 특정 노트 내용 로드
+ipcMain.handle("loadNoteContent", async(event, id) => {
+    return await loadNoteContent(id);
 });

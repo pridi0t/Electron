@@ -4,6 +4,11 @@ const { sequelize } = require("../config/sequelize");
 // 노트 모델 정의
 // sequelize 인스턴스를 인자로 받아 사용
 const Note = sequelize.define("Note", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     title: {
         type: DataTypes.STRING,
         allowNull: false
