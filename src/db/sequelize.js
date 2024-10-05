@@ -25,33 +25,8 @@ async function initDB() {
         await sequelize.sync({ alter: true });  // 테이블이 이미 있는 경우 기존 스키마를 변경하지 않음
     } catch (err) {
         console.error("[ERROR/DB] initDB Error", err);
+        throw err;
     }
 }
 
-// 노트 저장
-async function saveNote(note) {
-    try {
-        await Note.create({ content: note });
-        return true;
-    } catch (err) {
-        console.error("[ERROR/DB] saveNote Error", err);
-        return false;
-    }
-}
-
-// 노트 로드
-async function loadNotes() {
-    try {
-        const notes= await Note.findAll();
-        return notes.map((note) => note.content);
-    } catch (err) {
-        console.error("[ERROR/DB] loadNotes Error", err);
-        return [];
-    }
-}
-
-module.exports = {
-    initDB,
-    saveNote,
-    loadNotes    
-}
+module.exports = { sequelize, Note, initDB };
