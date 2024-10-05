@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "electron": "^32.1.2",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "sequelize": "^6.37.4",
+    "sqlite3": "^5.1.7"
   }
 }

@@ -1,15 +1,20 @@
 // app: 애플리케이션의 생명 주기 관리
 // BrowserWindow : 창 생성시 사용
 const { app, BrowserWindow, ipcMain } = require("electron");
+const { initDB, saveNote, loadNotes } = require("./noteController");
+const path = require("path");
 
 // 애플리케이션이 준비 되었을 때 (이벤트 발생)
-app.on("ready", () => {
+app.on("ready", async() => {
+    // DB 초기화
+    await initDB();
+
     // 새창 생성 및 설정
     const win = new BrowserWindow({
         width: 1200,
         height: 800,
         webPreferences: {
-            preload: `${__dirname}/preload.js`,
+            preload: path.join(__dirname, "preload.js"),
             nodeIntegration: false,
             contextIsolation: true,
             enableRemoteModule: false,
@@ -40,21 +45,13 @@ app.on("activate", () => {
     }
 });
 
-// 노트 로직
-const fs = require("fs");       // 파일 시스템과 상호작용
-const filePath = `${__dirname}/notes.txt`;
-
+/* 노트 관련 로직 */
 // 노트 저장
-ipcMain.handle("saveNote", (event, note) => {
-    return fs.appendFileSync(filePath, note + "\n");
+ipcMain.handle("saveNote", async(event, note) => {
+    return await saveNote(note);
 });
 
 // 노트 로드
-ipcMain.handle("loadNotes", () => {
-    // 파일이 존재하지 않는 경우 빈 파일 생성
-    if (!fs.existsSync(filePath)) {
-        fs.writeFileSync(filePath, "");
-        return ;
-    }
-    return fs.readFileSync(filePath, "utf-8").split("\n").filter(Boolean);
-})
+ipcMain.handle("loadNotes", async() => {
+    return await loadNotes();
+});
