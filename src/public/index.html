@@ -3,38 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>MEMO TEST</title>
-    <style>
-        * {
-            margin: 0px;
-            padding: 0px;
-        }
-        #wrapper {
-            display: flex;
-            height: 100vh;
-        }
-        #sidebar {
-            width: 20%;
-            padding: 20px;
-            background-color: rgb(204, 200, 200);
-        }
-        #contentBox {
-            display: flex;
-            flex-direction: column;
-            width: 80%;
-        }
-        #inputBox {
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            border: 1px solid black;
-        }
-        #inputBox > textarea {
-            height: 100px;
-        }
-        #content {
-            flex-grow: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <div id="wrapper">
@@ -45,11 +14,11 @@
         <div id="contentBox">
             <div id="inputBox">
                 <h2>CREATE NOTE</h2>
-                <input id="noteTitle" type="text" placeholder="노트 제목">
-                <textarea id="noteContent" placeholder="노트 내용"></textarea>
+                <input id="inputNoteTitle" type="text" placeholder="노트 제목">
+                <textarea id="inputNoteContent" placeholder="노트 내용"></textarea>
                 <button id="saveButton">저장</button>
             </div>
-            <div id="contentbox"></div>
+            <div id="noteContent"></div>
         </div>
     </div>
 
