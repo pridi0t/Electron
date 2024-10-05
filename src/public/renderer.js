@@ -6,11 +6,12 @@ const notesList = document.getElementById("notesList");
 // 노트 불러오기
 function loadNotes() {
     window.api.loadNotes().then((notes) => {
+        // notesList.innerHTML = notes.map((title, content) => `<div><h4>${title}</h4><p>${content}</p></div>`).join("");
         notes.forEach(({dataValues}) => {
             const {title, content} = dataValues;
             const newNote = document.createElement("div");
             newNote.innerHTML = `<h4>${title}</h4><p>${content}</p>`;
-            notesList.append(newNote);
+            notesList.append(newNote)
         });
     }).catch((err) => { 
         console.error("[ERROR/index.html] - loadNotes",err);

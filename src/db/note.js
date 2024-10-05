@@ -9,7 +9,8 @@ const Note = sequelize.define("Note", {
         allowNull: false
     },
     content: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: true
     }
 }, {
     tableName: "notes",
