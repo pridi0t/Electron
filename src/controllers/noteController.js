@@ -13,7 +13,7 @@ async function saveNote(note) {
 }
 
 // 노트의 제목 리스트 로드
-async function loadTitleList() {
+async function loadNoteTitleList() {
     try {
         const noteList = await Note.findAll();
         return noteList.map((note) => {
@@ -44,6 +44,6 @@ async function loadNoteContent(id) {
 
 module.exports = {
     saveNote,
-    loadTitleList,
+    loadNoteTitleList,
     loadNoteContent
 }

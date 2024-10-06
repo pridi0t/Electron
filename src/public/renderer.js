@@ -26,17 +26,17 @@ function addListButton(id, title) {
 }
 
 // 전체 노트 불러오기
-function loadTitleList() {
+function loadNoteTitleList() {
     // 이전 노트 초기화
     notesList.innerHTML = "";
 
-    window.api.loadTitleList().then((notes) => {
+    window.api.loadNoteTitleList().then((notes) => {
         notes.forEach((note) => {
             const {id, title} = note;
             addListButton(id, title);
         });
     }).catch((err) => {
-        console.error("[ERROR/renderer.js] - loadTitleList",err);
+        console.error("[ERROR/renderer.js] - loadNoteTitleList",err);
         alert("노트 목록을 불러오는데 실패했습니다");
     });
 }
@@ -72,4 +72,4 @@ saveButton.addEventListener("click", () => {
     }
 });
 
-loadTitleList();
+loadNoteTitleList();
