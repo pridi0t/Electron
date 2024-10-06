@@ -12,6 +12,7 @@
   "dependencies": {
     "electron": "^32.1.2",
     "fs": "^0.0.1-security",
+    "puppeteer": "^23.5.0",
     "sequelize": "^6.37.4",
     "sqlite3": "^5.1.7"
   }

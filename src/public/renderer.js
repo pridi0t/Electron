@@ -25,7 +25,7 @@ function addListButton(id, title) {
     notesList.append(newBtn);
 }
 
-// 전체 노트 불러오기
+// 전체 노트 제목 리스트 불러오기
 function loadNoteTitleList() {
     // 이전 노트 초기화
     notesList.innerHTML = "";
@@ -72,4 +72,22 @@ saveButton.addEventListener("click", () => {
     }
 });
 
-loadNoteTitleList();
+// loadNoteTitleList();
+
+/* 파일과 노트 동기화 */
+function convertFileToNote() {
+    // 이전 노트 초기화
+    notesList.innerHTML = "";
+    
+    window.api.convertFileToNote().then((notes) => {
+        notes.forEach((note) => {
+            const {title} = note;
+            addListButton("_", title);
+        });
+    }).catch((err) => {
+        console.error("[ERROR/renderer.js] - convertFileToNote", err);
+        alert("파일을불러오는데 실패했습니다");
+    });
+}
+
+convertFileToNote();
