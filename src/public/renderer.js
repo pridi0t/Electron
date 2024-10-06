@@ -1,9 +1,9 @@
 const syncConvBtn = document.getElementById("syncConvBtn");
 const notesList = document.getElementById("notesList");
-const contentBox = document.getElementById("noteContent");
-const noteTitle = document.getElementById("inputNoteTitle");
-const noteContent = document.getElementById("inputNoteContent");
-const saveBtn = document.getElementById("saveBtn");
+const contentBox = document.getElementById("contentBox");
+// const noteTitle = document.getElementById("inputNoteTitle");
+// const noteContent = document.getElementById("inputNoteContent");
+// const saveBtn = document.getElementById("saveBtn");
 
 function addListButton(id, title) {
     // 버튼 생성
@@ -55,23 +55,23 @@ function loadNoteContent(id) {
 }
 
 // 노트 저장
-saveBtn.addEventListener("click", () => {
-    const newNote = {
-        title: noteTitle.value.trim(),
-        content: noteContent.value
-    }
-    if (newNote.title) {
-        window.api.saveNote(newNote).then((id) => {
-            alert("노트 저장됨");
-            addListButton(id, newNote.title);
-        }).catch((err) => {
-            console.error("[ERROR/index.html] - saveNote", err);
-            alert("노트 저장 실패");
-        });
-    } else {
-        alert("제목을 입력해주세요");
-    }
-});
+// saveBtn.addEventListener("click", () => {
+//     const newNote = {
+//         title: noteTitle.value.trim(),
+//         content: noteContent.value
+//     }
+//     if (newNote.title) {
+//         window.api.saveNote(newNote).then((id) => {
+//             alert("노트 저장됨");
+//             addListButton(id, newNote.title);
+//         }).catch((err) => {
+//             console.error("[ERROR/index.html] - saveNote", err);
+//             alert("노트 저장 실패");
+//         });
+//     } else {
+//         alert("제목을 입력해주세요");
+//     }
+// });
 
 
 // 대화 목록 동기화

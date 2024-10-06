@@ -27,7 +27,7 @@ h2 {
     width: 80%;
 }
 
-#inputBox {
+/* #inputBox {
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -50,4 +50,4 @@ textarea {
 
 #noteContent > * {
     margin-top: 10px;
-}
+} */

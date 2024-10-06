@@ -2,23 +2,23 @@ const { sequelize } = require("../config/sequelize");
 const Note = require("../db/note");
 
 // 노트 1개 저장
-async function saveNote(note) {
-    const { title, content } = note;
-    try {
-        const result = await Note.create({ title, content });
-        return result.id;
-    } catch (err) {
-        console.error("[ERROR/DB] saveNote Error", err);
-        throw err;
-    }
-}
+// async function saveNote(note) {
+//     const { title, content } = note;
+//     try {
+//         const result = await Note.create({ title, content });
+//         return result.id;
+//     } catch (err) {
+//         console.error("[ERROR/DB] saveNote Error", err);
+//         throw err;
+//     }
+// }
 
 // 노트 리스트 저장
 async function saveNoteList(notes) {
     // 트랜잭션
     const transaction = await sequelize.transaction();
 
-    try {    
+    try {
         const formattedNotes = notes.map(note => ({
             title: note.title,
             content: note.content.join("\n")    // content 배열을 문자열로 변환
@@ -64,7 +64,7 @@ async function loadNoteContent(id) {
 }
 
 module.exports = {
-    saveNote,
+    // saveNote,
     saveNoteList,
     loadNoteTitleList,
     loadNoteContent
