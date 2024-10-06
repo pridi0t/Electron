@@ -22,7 +22,6 @@ async function convertFileToNote() {
                 content: Array.from(el.querySelectorAll(".message div"), (el) => el.innerHTML)
             }))
         );
-        JSON.stringify(conversations, null, 2);
         return conversations;
     } catch (err) {
         console.error("[ERROR/FILE] convertFileToNote Error]", err);

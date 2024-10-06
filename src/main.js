@@ -2,14 +2,14 @@
 // BrowserWindow : 창 생성시 사용
 const { app, BrowserWindow, ipcMain } = require("electron");
 const { initDB } = require("./config/sequelize");
-const { saveNote, loadNoteTitleList, loadNoteContent } = require("./controllers/noteController");
+const { saveNote, loadNoteTitleList, loadNoteContent, saveNoteList } = require("./controllers/noteController");
 const { convertFileToNote } = require("./controllers/fileController");
 const path = require("path");
 
 // 애플리케이션이 준비 되었을 때 (이벤트 발생)
 app.on("ready", async() => {
     // DB 초기화
-    // await initDB();
+    await initDB();
 
     // 새창 생성 및 설정
     const win = new BrowserWindow({
@@ -48,7 +48,7 @@ app.on("activate", () => {
 });
 
 /* 노트 관련 로직 */
-// 노트 저장
+// 노트 1개 저장
 ipcMain.handle("saveNote", async(event, note) => {
     return await saveNote(note);
 });
@@ -63,7 +63,8 @@ ipcMain.handle("loadNoteContent", async(event, id) => {
     return await loadNoteContent(id);
 });
 
-/* 파일과 노트 동기화 */
+// 대화 목록 동기화
 ipcMain.handle("convertFileToNote", async() => {
-    return await convertFileToNote();
+    const conversations = await convertFileToNote();
+    return await saveNoteList(conversations);
 });

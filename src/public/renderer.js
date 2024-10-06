@@ -1,8 +1,9 @@
-const noteTitle = document.getElementById("inputNoteTitle");
-const noteContent = document.getElementById("inputNoteContent");
-const saveButton = document.getElementById("saveButton");
+const syncConvBtn = document.getElementById("syncConvBtn");
 const notesList = document.getElementById("notesList");
 const contentBox = document.getElementById("noteContent");
+const noteTitle = document.getElementById("inputNoteTitle");
+const noteContent = document.getElementById("inputNoteContent");
+const saveBtn = document.getElementById("saveBtn");
 
 function addListButton(id, title) {
     // 버튼 생성
@@ -54,7 +55,7 @@ function loadNoteContent(id) {
 }
 
 // 노트 저장
-saveButton.addEventListener("click", () => {
+saveBtn.addEventListener("click", () => {
     const newNote = {
         title: noteTitle.value.trim(),
         content: noteContent.value
@@ -72,22 +73,15 @@ saveButton.addEventListener("click", () => {
     }
 });
 
-// loadNoteTitleList();
 
-/* 파일과 노트 동기화 */
-function convertFileToNote() {
-    // 이전 노트 초기화
-    notesList.innerHTML = "";
-    
-    window.api.convertFileToNote().then((notes) => {
-        notes.forEach((note) => {
-            const {title} = note;
-            addListButton("_", title);
-        });
+// 대화 목록 동기화
+syncConvBtn.addEventListener("click", () => {
+    window.api.convertFileToNote().then(() => {
+        loadNoteTitleList();
     }).catch((err) => {
         console.error("[ERROR/renderer.js] - convertFileToNote", err);
-        alert("파일을불러오는데 실패했습니다");
+        alert("대화 목록을 불러오는데 실패했습니다");
     });
-}
+});
 
-convertFileToNote();
+loadNoteTitleList();
