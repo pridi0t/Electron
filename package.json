@@ -2,8 +2,10 @@
   "name": "gpt-note",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main.js",
+  "main": "dist/main.js",
   "scripts": {
+    "build": "tsc && copyfiles -u 1 src/**/* dist -e src/**/*.ts",
+    "start": "npm run build && electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,5 +17,12 @@
     "puppeteer": "^23.5.0",
     "sequelize": "^6.37.4",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@types/electron": "^1.6.10",
+    "@types/node": "^22.7.4",
+    "@types/sequelize": "^4.28.20",
+    "copyfiles": "^2.4.1",
+    "typescript": "^5.6.2"
   }
 }

@@ -1,5 +1,6 @@
-const { sequelize } = require("../config/sequelize");
-const Note = require("../db/note");
+import { sequelize } from "../config/sequelize";
+import { NoteTitleDTO, NoteDetailDTO } from "../types/note";
+import Note from "../models/Note";
 
 // 노트 1개 저장
 // async function saveNote(note) {
@@ -14,7 +15,7 @@ const Note = require("../db/note");
 // }
 
 // 노트 리스트 저장
-async function saveNoteList(notes) {
+async function saveNoteList(notes: NoteDetailDTO[]): Promise<Note[]> {
     // 트랜잭션
     const transaction = await sequelize.transaction();
 
@@ -34,14 +35,14 @@ async function saveNoteList(notes) {
 }
 
 // 노트의 제목 리스트 로드
-async function loadNoteTitleList() {
+async function loadNoteTitleList(): Promise<NoteTitleDTO[]>{
     try {
         const noteList = await Note.findAll();
-        return noteList.map((note) => {
+        return noteList.map((note: Note) => {
             return {
-                id: note.dataValues.id,
-                title: note.dataValues.title
-            }
+                id: note.dataValues.id as number,
+                title: note.dataValues.title as string,
+            } as NoteTitleDTO;
         });
     } catch (err) {
         console.error("[ERROR/DB] loadNotes Error", err);
@@ -49,21 +50,24 @@ async function loadNoteTitleList() {
     }
 }
 
-// 특정 노트 불러오기
-async function loadNoteContent(id) {
+// 노트 상세보기
+async function loadNoteContent(id: number): Promise<NoteDetailDTO> {
     try {
         const note = await Note.findByPk(id);
+        if (note === undefined) {
+            throw new Error("노트를 찾을 수 없습니다."); // 노트가 없는 경우 처리
+        }
         return {
-            title: note.dataValues.title,
-            content: note.dataValues.content
-        };
+            title: note?.dataValues.title,
+            content: note?.dataValues.content || []
+        } as NoteDetailDTO;
     } catch (err) {
         console.error("[ERROR/DB] loadNoteById Error", err);
         throw err;
     }
 }
 
-module.exports = {
+export {
     // saveNote,
     saveNoteList,
     loadNoteTitleList,

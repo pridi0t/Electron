@@ -5,11 +5,11 @@ const contentBox = document.getElementById("contentBox");
 // const noteContent = document.getElementById("inputNoteContent");
 // const saveBtn = document.getElementById("saveBtn");
 
-function addListButton(id, title) {
+function addListButton(id: number, title: string): void {
     // 버튼 생성
     const newBtn = document.createElement("button");
     newBtn.innerHTML = `${title}`;
-    newBtn.setAttribute("noteId", id);;
+    newBtn.setAttribute("noteId", id.toString());
     newBtn.addEventListener("click", () => loadNoteContent(id));
 
     // 버튼 스타일 추가
@@ -23,31 +23,31 @@ function addListButton(id, title) {
     newBtn.style.textOverflow = "ellipsis";
     newBtn.style.backgroundColor = "white";
 
-    notesList.append(newBtn);
+    (notesList as HTMLElement).append(newBtn);
 }
 
 // 전체 노트 제목 리스트 불러오기
 function loadNoteTitleList() {
     // 이전 노트 초기화
-    notesList.innerHTML = "";
+    (notesList as HTMLElement).innerHTML = "";
 
-    window.api.loadNoteTitleList().then((notes) => {
-        notes.forEach((note) => {
+    window.api.loadNoteTitleList().then((notes: any[]) => {
+        notes.forEach((note: any) => {
             const {id, title} = note;
             addListButton(id, title);
         });
-    }).catch((err) => {
+    }).catch((err: any) => {
         console.error("[ERROR/renderer.js] - loadNoteTitleList",err);
         alert("노트 목록을 불러오는데 실패했습니다");
     });
 }
 
 // 특정 노트 불러오기
-function loadNoteContent(id) {
-    window.api.loadNoteContent(id).then((note) => {
+function loadNoteContent(id: number): void {
+    window.api.loadNoteContent(id).then((note: any) => {
         const { title, content } = note;
-        contentBox.innerHTML = "";
-        contentBox.innerHTML = `<h2>${title}</h2><hr/><p>${content}</p>`;
+        (contentBox as HTMLElement).innerHTML = "";
+        (contentBox as HTMLElement).innerHTML = `<h2>${title}</h2><hr/><p>${content}</p>`;
     }).catch((err) => {
         console.error("[ERROR/renderer.js] - loadNoteContent", err);
         alert("노트를 불러오는데 실패했습니다.");
@@ -75,7 +75,7 @@ function loadNoteContent(id) {
 
 
 // 대화 목록 동기화
-syncConvBtn.addEventListener("click", () => {
+(syncConvBtn as HTMLElement).addEventListener("click", () => {
     window.api.convertFileToNote().then(() => {
         loadNoteTitleList();
     }).catch((err) => {
