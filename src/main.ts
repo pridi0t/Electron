@@ -2,8 +2,9 @@
 // BrowserWindow : 창 생성시 사용
 import { app, BrowserWindow, ipcMain } from "electron";
 import { initDB } from "./config/sequelize";
-import { loadNoteTitleList, loadNoteContent, saveNoteList } from "./controllers/noteController";
-import { convertFileToNote } from "./controllers/fileController";
+import { convertFileToDB } from "./controllers/fileController";
+import { loadConversationList, loadDialogue } from "./controllers/ConversationDialogueController";
+// import { loadNoteTitleList, loadNoteContent, saveNoteList } from "./controllers/noteController";
 import * as path from "path";
 
 // 전역 변수로 윈도우 참조를 유지하여 가비지 컬렉션 방지
@@ -59,23 +60,34 @@ app.on("activate", () => {
     }
 });
 
+/* 대화 관련 로직 */
+// 대화 목록 동기화
+ipcMain.handle("convertFileToDB", async() => {
+    await convertFileToDB();
+});
+
+// 대화 목록 리스트 불러오기
+ipcMain.handle("loadConversationList", async() => {
+    return await loadConversationList();
+});
+
+// 대화 상세보기
+ipcMain.handle("loadDialogue", async(_, id: number) => {
+    return await loadDialogue(id);
+});
+
 /* 노트 관련 로직 */
-// 노트 1개 저장
+// //노트 1개 저장
 // ipcMain.handle("saveNote", async(_, note: any) => {
 //     return await saveNote(note);
 // });
 
-// 노트의 제목 리스트 로드
-ipcMain.handle("loadNoteTitleList", async() => {
-    return await loadNoteTitleList();
-});
+// // 노트의 제목 리스트 로드
+// ipcMain.handle("loadNoteTitleList", async() => {
+//     return await loadNoteTitleList();
+// });
 
-// 특정 노트 내용 로드
-ipcMain.handle("loadNoteContent", async(_, id: number) => {
-    return await loadNoteContent(id);
-});
-
-// 대화 목록 동기화
-ipcMain.handle("convertFileToNote", async() => {
-    const conversations = await convertFileToNote();
-});
+// // 특정 노트 내용 로드
+// ipcMain.handle("loadNoteContent", async(_, id: number) => {
+//     return await loadNoteContent(id);
+// });

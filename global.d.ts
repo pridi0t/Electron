@@ -1,4 +1,4 @@
-import { API } from "./src/types/note";
+import { API } from "./src/types/tApi";
 
 declare global {
     interface Window {

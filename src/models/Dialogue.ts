@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from "../config/sequelize";
-import Conversation from "./Conversation"; // Import Conversation for associations
+import Conversation from "./Conversation";
 
 // 모델 속성 정의
 interface DialogueAttributes {

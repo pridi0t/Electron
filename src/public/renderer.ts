@@ -1,5 +1,5 @@
 const syncConvBtn = document.getElementById("syncConvBtn");
-const notesList = document.getElementById("notesList");
+const sidebarList = document.getElementById("sidebarList");
 const contentBox = document.getElementById("contentBox");
 // const noteTitle = document.getElementById("inputNoteTitle");
 // const noteContent = document.getElementById("inputNoteContent");
@@ -10,7 +10,7 @@ function addListButton(id: number, title: string): void {
     const newBtn = document.createElement("button");
     newBtn.innerHTML = `${title}`;
     newBtn.setAttribute("noteId", id.toString());
-    newBtn.addEventListener("click", () => loadNoteContent(id));
+    // newBtn.addEventListener("click", () => loadNoteContent(id));
 
     // 버튼 스타일 추가
     newBtn.style.marginTop = "3px";
@@ -23,36 +23,56 @@ function addListButton(id: number, title: string): void {
     newBtn.style.textOverflow = "ellipsis";
     newBtn.style.backgroundColor = "white";
 
-    (notesList as HTMLElement).append(newBtn);
+    (sidebarList as HTMLElement).append(newBtn);
 }
 
-// 전체 노트 제목 리스트 불러오기
-function loadNoteTitleList() {
+// 전체 대화 목록 불러오기
+function loadConversationList() {
     // 이전 노트 초기화
-    (notesList as HTMLElement).innerHTML = "";
-
-    window.api.loadNoteTitleList().then((notes: any[]) => {
-        notes.forEach((note: any) => {
-            const {id, title} = note;
-            addListButton(id, title);
+    (sidebarList as HTMLElement).innerHTML = "";
+    
+    window.api.loadConversationList().then((conversations: any[]) => {
+        conversations.forEach((convData: any) => {
+            const formattedData = {
+                id: convData.dataValues.id,
+                title: convData.dataValues.title
+            };
+            addListButton(formattedData.id, formattedData.title);
         });
     }).catch((err: any) => {
-        console.error("[ERROR/renderer.js] - loadNoteTitleList",err);
-        alert("노트 목록을 불러오는데 실패했습니다");
+        console.error("[ERROR/renderer.js] - loadConversationList",err);
+        alert("대화 목록을 불러오는데 실패했습니다");
     });
 }
 
-// 특정 노트 불러오기
-function loadNoteContent(id: number): void {
-    window.api.loadNoteContent(id).then((note: any) => {
-        const { title, content } = note;
-        (contentBox as HTMLElement).innerHTML = "";
-        (contentBox as HTMLElement).innerHTML = `<h2>${title}</h2><hr/><p>${content}</p>`;
+// 대화 목록 동기화
+(syncConvBtn as HTMLElement).addEventListener("click", () => {
+    window.api.convertFileToDB().then(() => {
+        loadConversationList();
     }).catch((err) => {
-        console.error("[ERROR/renderer.js] - loadNoteContent", err);
-        alert("노트를 불러오는데 실패했습니다.");
+        console.error("[ERROR/renderer.js] - convertFileToDB", err);
+        alert("대화 목록을 동기화하는데 실패했습니다");
     });
-}
+});
+
+loadConversationList();
+
+// // 특정 노트 불러오기
+// function loadNoteContent(id: number): void {
+//     window.api.loadNoteContent(id).then((note: any) => {
+//         const { title, content } = note;
+//         (contentBox as HTMLElement).innerHTML = "";
+//         (contentBox as HTMLElement).innerHTML = `<h2>${title}</h2><hr/><p>${content}</p>`;
+//     }).catch((err) => {
+//         console.error("[ERROR/renderer.js] - loadNoteContent", err);
+//         alert("노트를 불러오는데 실패했습니다.");
+//     });
+// }
+
+
+
+
+
 
 // 노트 저장
 // saveBtn.addEventListener("click", () => {
@@ -72,16 +92,3 @@ function loadNoteContent(id: number): void {
 //         alert("제목을 입력해주세요");
 //     }
 // });
-
-
-// 대화 목록 동기화
-(syncConvBtn as HTMLElement).addEventListener("click", () => {
-    window.api.convertFileToNote().then(() => {
-        loadNoteTitleList();
-    }).catch((err) => {
-        console.error("[ERROR/renderer.js] - convertFileToNote", err);
-        alert("대화 목록을 불러오는데 실패했습니다");
-    });
-});
-
-loadNoteTitleList();

@@ -6,7 +6,7 @@ import Dialogue from "../models/Dialogue";
 const url = path.join(__dirname, "../db/chat.html");
 
 // 로컬 HTML 파싱
-async function convertFileToNote(): Promise<void> {
+async function convertFileToDB(): Promise<void> {
     let browser: (Browser | null) = null;
     try {
         // 브라우저와 페이지 생성
@@ -46,5 +46,5 @@ async function convertFileToNote(): Promise<void> {
 }
 
 export {
-    convertFileToNote
+    convertFileToDB
 }
