@@ -78,5 +78,4 @@ ipcMain.handle("loadNoteContent", async(_, id: number) => {
 // 대화 목록 동기화
 ipcMain.handle("convertFileToNote", async() => {
     const conversations = await convertFileToNote();
-    return await saveNoteList(conversations);
 });

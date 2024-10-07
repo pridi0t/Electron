@@ -9,17 +9,20 @@ const sequelize = new Sequelize({
 });
 
 // 모델 불러오기
-// import { Conversation, Dialogue } from "../models";
-
-// 관계 설정
-// Conversation.associate({ Dialogue });
-// Dialogue.associate({ Conversation });
+import Conversation from "../models/Conversation";
+import Dialogue from "../models/Dialogue";
+import Note from "../models/Note";
 
 // DB와 테이블 동기화
 async function initDB(): Promise<void> {
     try {
         await sequelize.authenticate(); // DB 연결 테스트
         console.log("[DB 연결 성공 !]")
+
+        // 관계 설정
+        Conversation.associate({ Dialogue });
+        Dialogue.associate({ Conversation });
+
         // await sequelize.sync({ alter: true });  // 테이블이 이미 있는 경우 기존 스키마를 변경하지 않음
         await sequelize.sync({ force: true });  // 테이블이 없으면 생성
         console.log("[DB TABLE 생성 완료 !]");
@@ -32,6 +35,6 @@ async function initDB(): Promise<void> {
 export {
     sequelize,
     initDB,
-    // Conversation,
-    // Dialogue
+    Conversation,
+    Dialogue,
 };
