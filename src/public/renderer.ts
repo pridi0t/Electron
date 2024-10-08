@@ -5,12 +5,13 @@ const contentBox = document.getElementById("contentBox");
 // const noteContent = document.getElementById("inputNoteContent");
 // const saveBtn = document.getElementById("saveBtn");
 
+// 목록 버튼 추가
 function addListButton(id: number, title: string): void {
     // 버튼 생성
     const newBtn = document.createElement("button");
-    newBtn.innerHTML = `${title}`;
+    newBtn.innerHTML = title;
     newBtn.setAttribute("noteId", id.toString());
-    // newBtn.addEventListener("click", () => loadNoteContent(id));
+    newBtn.addEventListener("click", () => loadDialogue(id, title));
 
     // 버튼 스타일 추가
     newBtn.style.marginTop = "3px";
@@ -24,6 +25,16 @@ function addListButton(id: number, title: string): void {
     newBtn.style.backgroundColor = "white";
 
     (sidebarList as HTMLElement).append(newBtn);
+}
+
+// 대화 내용 화면에 그리기
+function addDialogue(dialogues: { speaker: string, content: string }[]): void {
+    dialogues.forEach(dialogue => {
+        // 대화 상자 생성
+        const newEle = document.createElement("div");
+        newEle.innerText = `speaker: ${dialogue.speaker}\n ${dialogue.content}`;
+        (contentBox as HTMLElement).append(newEle);
+    });
 }
 
 // 전체 대화 목록 불러오기
@@ -45,6 +56,22 @@ function loadConversationList() {
     });
 }
 
+// 특정 대화 내용 불러오기
+function loadDialogue(id: number, title: string): void {
+    window.api.loadDialogue(id).then((dialogues: any[]) => {
+        (contentBox as HTMLElement).innerHTML = "";
+        (contentBox as HTMLElement).innerHTML = `<h2>${title}</h2><hr/>`;
+        const formattedData = dialogues.map((dia) => ({
+            speaker: dia.dataValues.speaker,
+            content: dia.dataValues.content
+        }));
+        addDialogue(formattedData);
+    }).catch((err) => {
+        console.error("[ERROR/renderer.js] - loadDialogue", err);
+        alert("대화 내용을 불러오는데 실패했습니다.");
+    });
+}
+
 // 대화 목록 동기화
 (syncConvBtn as HTMLElement).addEventListener("click", () => {
     window.api.convertFileToDB().then(() => {
@@ -56,23 +83,6 @@ function loadConversationList() {
 });
 
 loadConversationList();
-
-// // 특정 노트 불러오기
-// function loadNoteContent(id: number): void {
-//     window.api.loadNoteContent(id).then((note: any) => {
-//         const { title, content } = note;
-//         (contentBox as HTMLElement).innerHTML = "";
-//         (contentBox as HTMLElement).innerHTML = `<h2>${title}</h2><hr/><p>${content}</p>`;
-//     }).catch((err) => {
-//         console.error("[ERROR/renderer.js] - loadNoteContent", err);
-//         alert("노트를 불러오는데 실패했습니다.");
-//     });
-// }
-
-
-
-
-
 
 // 노트 저장
 // saveBtn.addEventListener("click", () => {

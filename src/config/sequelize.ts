@@ -23,8 +23,8 @@ async function initDB(): Promise<void> {
         Conversation.associate({ Dialogue });
         Dialogue.associate({ Conversation });
 
-        // await sequelize.sync({ alter: true });  // 테이블이 이미 있는 경우 기존 스키마를 변경하지 않음
-        await sequelize.sync({ force: true });  // 테이블이 없으면 생성
+        // await sequelize.sync({ alter: true });     // 테이블이 이미 있는 경우 기존 스키마를 변경하지 않음
+        await sequelize.sync({ force: true });  // 테이블 삭제하고 다시 생성
         console.log("[DB TABLE 생성 완료 !]");
     } catch (err) {
         console.error("[ERROR/DB] initDB Error", err);

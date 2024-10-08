@@ -5,6 +5,7 @@ import Conversation from "./Conversation";
 // 모델 속성 정의
 interface DialogueAttributes {
     id: number;
+    speaker: string;
     content: string;
     conversationId: number;  // Foreign key
 }
@@ -13,6 +14,7 @@ interface DialogueCreationAttributes extends Optional<DialogueAttributes, 'id'> 
 
 class Dialogue extends Model<DialogueAttributes, DialogueCreationAttributes> implements DialogueAttributes {
     public id!: number;
+    public speaker!: string;
     public content!: string;
     public conversationId!: number;
 
@@ -31,6 +33,10 @@ Dialogue.init({
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+    },
+    speaker: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     content: {
         type: DataTypes.TEXT,

@@ -30,12 +30,18 @@ async function convertFileToDB(): Promise<void> {
         // 대화 내용 DB 저장
         for (const convData of pageConversationData) {
             const convResult = await Conversation.create({ title: convData.title });
-            const diaData = convData.dialogues.map((dialogue) => ({
-                content: dialogue,                // 각 대화 내용을 개별적으로 저장
-                conversationId: convResult.id     // 생성된 대화의 ID와 연결
-            }));
+
+            // 새로운 배열에 발화자와 내용 추가
+            const filteredData = [];
+            for (let i = 1; i < convData.dialogues.length; i += 2) {
+                filteredData.push({
+                    speaker: convData.dialogues[i - 1],  // 발화자 (짝수 인덱스에 들어있음)
+                    content: convData.dialogues[i],      // 대화 내용
+                    conversationId: convResult.id
+                });
+            }
             
-            await Dialogue.bulkCreate(diaData);
+            await Dialogue.bulkCreate(filteredData);
         }
     } catch (err) {
         console.error("[ERROR/FILE] convertFileToNote Error]", err);
