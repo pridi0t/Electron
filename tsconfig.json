@@ -1,17 +1,17 @@
 {
     "compilerOptions": {
     "target": "ES6",            // 목표 ECMAScript 버전
-    "module": "commonjs",       // 모듈 시스템 (Node.js는 CommonJS 모듈 사용)
-    "outDir": "./dist",         // 컴파일된 파일 출력 디렉토리
-    "rootDir": "./src",         // 소스 파일 디렉토리
+    "module": "CommonJS",       // 모듈 시스템 (Node.js는 CommonJS 모듈 사용)
+    "jsx": "react-jsx",
     "strict": true,             // 모든 엄격한 타입 검사 활성화
     "esModuleInterop": true,    // ES 모듈과 CommonJS 간의 호환성
     "skipLibCheck": true,       // 라이브러리 타입 검사 건너뛰기
-    "allowSyntheticDefaultImports": true
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",         // 컴파일된 파일 출력 디렉토리
+    "rootDir": "./src"          // 소스 파일 디렉토리
   },
     "include": [
-        "src/**/*",
-        "./global.d.ts"
+        "src/**/*"
     ],
     "exclude": ["node_modules"]
 }

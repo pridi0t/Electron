@@ -17,14 +17,14 @@ function createWindow(): void {
         height: 800,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
-            nodeIntegration: false,
             contextIsolation: true,
+            nodeIntegration: false,
         }
     });
 
     // index.html 파일 로드
-    win.loadFile(path.join(__dirname, "public", "index.html"));
-    
+    win.loadURL(`file://${path.join(__dirname, "../dist/public/index.html")}`);
+
     // 개발자 도구 열기
     win.webContents.openDevTools();
 
