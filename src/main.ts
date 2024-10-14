@@ -7,6 +7,15 @@ import { loadConversationList, loadDialogue } from "./controllers/ConversationDi
 // import { loadNoteTitleList, loadNoteContent, saveNoteList } from "./controllers/noteController";
 import * as path from "path";
 
+// // Electron Reload 설정
+// try {
+//     require('electron-reload')(__dirname, {
+//         electron: require(`${__dirname}/node_modules/electron`) // Electron 모듈 경로
+//     });
+// } catch (err) {
+//     console.error('Failed to set up electron-reload:', err);
+// }
+
 // 전역 변수로 윈도우 참조를 유지하여 가비지 컬렉션 방지
 let win: BrowserWindow | null = null;
 
