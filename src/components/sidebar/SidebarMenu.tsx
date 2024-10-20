@@ -27,6 +27,17 @@ const SidebarMenu: React.FC = () => {
         color="#DDE6ED"
         onClick={() => console.log("Note Button Click")}
       />
+      <Button
+        text="GPT 데이터 가져오기"
+        color="#DDE6ED"
+        onClick={async() => {
+          try {
+            await window.api.convertFileToDB();
+          } catch (err) {
+            console.error(err);
+          }
+        }}
+      />
     </Menu>
   );
 };

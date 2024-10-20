@@ -26,6 +26,7 @@ module.exports =  {
             patterns: [
                 { from: 'public/index.html', to: '.'},
                 { from: 'public/images/**/*', to: '../' },
+                { from: 'src/db/chat.html', to: '.'}
             ]
         })
     ]

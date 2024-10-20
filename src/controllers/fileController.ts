@@ -3,7 +3,7 @@ import path from "path";
 import Conversation from "../models/Conversation";
 import Dialogue from "../models/Dialogue";
 
-const url = path.join(__dirname, "../db/chat.html");
+const url = path.join(__dirname, "../public/chat.html");
 
 // 로컬 HTML 파싱
 async function convertFileToDB(): Promise<void> {
