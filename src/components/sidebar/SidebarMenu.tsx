@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import Button from '../ui/Button';
+import SidebarList from './SidebarList';
 
 const Menu = styled.div`
   width: 100%;
@@ -13,6 +14,8 @@ const Menu = styled.div`
 `;
 
 const SidebarMenu: React.FC = () => {
+  const [showSidebarList, setShowSidebarList] = useState(false);
+
   return (
     <Menu>
       <Button
@@ -31,13 +34,11 @@ const SidebarMenu: React.FC = () => {
         text="GPT 데이터 가져오기"
         color="#DDE6ED"
         onClick={async() => {
-          try {
             await window.api.convertFileToDB();
-          } catch (err) {
-            console.error(err);
-          }
+            setShowSidebarList(true);
         }}
       />
+      {showSidebarList && <SidebarList />}
     </Menu>
   );
 };
