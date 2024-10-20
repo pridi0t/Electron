@@ -1,18 +1,24 @@
 import React from 'react';
 import SidebarMenu from './SidebarMenu';
 import { styled } from 'styled-components';
+import SidebarList from './SidebarList';
 
 const SidebarWrapper = styled.div`
   overflow: hidden;
-  padding: 20px 0px;
+  padding: 0px 10px;
   width: 20%;
   min-width: 180px;
   min-height: 100%;
-  background-color: #9DB2BF;
+  background-color: #27374D;
+
+  & > * {
+    margin: 30px 0px;
+  }
 `;
 
-const Title = styled.h2`
-  margin: 10px 10px;
+const Title = styled.h1`
+  color: #DDE6ED;
+  text-align: center;
 `;
 
 const Sidebar: React.FC = () => {
@@ -20,6 +26,7 @@ const Sidebar: React.FC = () => {
     <SidebarWrapper>
       <Title>GPT-NOTE</Title>
       <SidebarMenu />
+      <SidebarList />
     </SidebarWrapper>
   );
 };

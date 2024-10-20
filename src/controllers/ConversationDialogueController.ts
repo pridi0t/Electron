@@ -1,11 +1,22 @@
 import Conversation from "../models/Conversation";
 import Dialogue from "../models/Dialogue";
+import { ConversationTitleButtonInfo } from "../types/tApi";
 
 // 대화 목록 리스트 로드
-async function loadConversationList(): Promise<Conversation[]>{
+async function loadConversationTitleList(): Promise<ConversationTitleButtonInfo[]>{
     try {
+        const result: ConversationTitleButtonInfo[] = [];
         const conversations = await Conversation.findAll();
-        return conversations;   // 대화 목록 없을 경우 빈 배열이 반환됨
+        if (!conversations) {
+            return [];
+        }
+        conversations.forEach((convData: Conversation) => {
+            result.push({
+                id: convData.dataValues.id.toString(),
+                title: convData.dataValues.title
+            });
+        });
+        return result;
     } catch (err) {
         console.error("[ERROR/DB] loadConversationList Error", err);
         throw err;
@@ -29,6 +40,6 @@ async function loadDialogue(id: number): Promise<Dialogue[]> {
 }
 
 export {
-    loadConversationList,
+    loadConversationTitleList,
     loadDialogue
 }

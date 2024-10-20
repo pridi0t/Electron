@@ -3,18 +3,9 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import { initDB } from "./config/sequelize";
 import { convertFileToDB } from "./controllers/fileController";
-import { loadConversationList, loadDialogue } from "./controllers/ConversationDialogueController";
+import { loadConversationTitleList, loadDialogue } from "./controllers/ConversationDialogueController";
 // import { loadNoteTitleList, loadNoteContent, saveNoteList } from "./controllers/noteController";
 import * as path from "path";
-
-// // Electron Reload 설정
-// try {
-//     require('electron-reload')(__dirname, {
-//         electron: require(`${__dirname}/node_modules/electron`) // Electron 모듈 경로
-//     });
-// } catch (err) {
-//     console.error('Failed to set up electron-reload:', err);
-// }
 
 // 전역 변수로 윈도우 참조를 유지하여 가비지 컬렉션 방지
 let win: BrowserWindow | null = null;
@@ -76,8 +67,8 @@ ipcMain.handle("convertFileToDB", async() => {
 });
 
 // 대화 목록 리스트 불러오기
-ipcMain.handle("loadConversationList", async() => {
-    return await loadConversationList();
+ipcMain.handle("loadConversationTitleList", async() => {
+    return await loadConversationTitleList();
 });
 
 // 대화 상세보기

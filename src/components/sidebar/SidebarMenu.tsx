@@ -3,12 +3,13 @@ import { styled } from 'styled-components';
 import Button from '../ui/Button';
 
 const Menu = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px 10px;
+  width: 100%;
   text-align: left;
-  background-color: #DDE6ED;
+
+  & button:hover {
+    border: 1px solid #DDE6ED;
+    border-radius: 3px;
+  }
 `;
 
 const SidebarMenu: React.FC = () => {
@@ -18,15 +19,13 @@ const SidebarMenu: React.FC = () => {
         icon="images/icon_conversation.png"
         text="Conversation"
         color="#DDE6ED"
-        backgroundcolor="#27374D"
-        onClick={() => console.log("Button Click")}
+        onClick={() => console.log("Conversation Button Click")}
       />
       <Button
         icon="images/icon_note.png"
         text="Note"
         color="#DDE6ED"
-        backgroundcolor="#27374D"
-        onClick={() => console.log("Button Click")}
+        onClick={() => console.log("Note Button Click")}
       />
     </Menu>
   );
