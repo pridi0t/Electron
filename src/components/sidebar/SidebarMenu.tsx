@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useMenu } from "../../context/MenuContext";
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import Button from '../ui/Button';
-import SidebarList from './SidebarList';
+import SidebarList from './ContextList';
 
 const Menu = styled.div`
   width: 100%;
@@ -14,31 +16,38 @@ const Menu = styled.div`
 `;
 
 const SidebarMenu: React.FC = () => {
-  const [showSidebarList, setShowSidebarList] = useState(false);
+  const { setCategory } = useMenu();
+  const navigate = useNavigate();
 
   return (
     <Menu>
       <Button
+        text="데이터 동기화"
+        color="#DDE6ED"
+        onClick={async() => {
+            await window.api.convertFileToDB();
+            setCategory("conversation");
+        }}
+      />
+      <Button
         icon="images/icon_conversation.png"
         text="Conversation"
         color="#DDE6ED"
-        onClick={() => console.log("Conversation Button Click")}
+        onClick={() => {
+          setCategory("conversation");
+          navigate("/conversation");
+        }}
       />
       <Button
         icon="images/icon_note.png"
         text="Note"
         color="#DDE6ED"
-        onClick={() => console.log("Note Button Click")}
-      />
-      <Button
-        text="GPT 데이터 가져오기"
-        color="#DDE6ED"
-        onClick={async() => {
-            await window.api.convertFileToDB();
-            setShowSidebarList(true);
+        onClick={() => {
+          setCategory("note");
+          navigate("/note");
         }}
       />
-      {showSidebarList && <SidebarList />}
+      <SidebarList />
     </Menu>
   );
 };

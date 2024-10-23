@@ -1,7 +1,8 @@
 import React from 'react';
-import SidebarMenu from './SidebarMenu';
+import { useMenu } from "../../context/MenuContext";
 import { styled } from 'styled-components';
-import SidebarList from './SidebarList';
+import SidebarMenu from './SidebarMenu';
+import ContextList from './ContextList';
 
 const SidebarWrapper = styled.div`
   overflow: hidden;
@@ -22,11 +23,17 @@ const Title = styled.h1`
 `;
 
 const Sidebar: React.FC = () => {
-  return (
+  // 현재 선택된 카테고리 가져오기
+  const { currentCategory } = useMenu();
+
+  return (  
     <SidebarWrapper>
       <Title>GPT-NOTE</Title>
       <SidebarMenu />
-      <SidebarList />
+      <div>
+        {currentCategory === "conversation" && <ContextList/>}
+        {currentCategory === "note" && <p>Note List</p>}
+      </div>
     </SidebarWrapper>
   );
 };

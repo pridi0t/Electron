@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
-import SidebarListItem from "./SidebarListItem";
+import ContextListItem from "./ContextListItem";
 import { ConversationTitleButtonInfo } from "../../types/tApi";
 
-const SidebarList: React.FC = () => {
-    // const list: { id: number, title: string }[] = [
-    //     { id: 1, title: "title 1" },
-    //     { id: 2, title: "title 2" },
-    //     { id: 3, title: "title 2title 2title 2title 2title 2title 2title 2title 2title 2title 2title 2title 2title 2title 2title 2" }
-    // ];
-
+const ContextList: React.FC = () => {
     // 대화 목록을 저장할 상태
     const [convList, setConvList] = useState<ConversationTitleButtonInfo[]>([]);
 
@@ -23,14 +17,14 @@ const SidebarList: React.FC = () => {
     }, []);
 
     return (
-        <div>
+        <>
             {
                 convList.map(({id, title}) => {
-                    return <SidebarListItem key={id} id={id} title={title}/>;
+                    return <ContextListItem key={id} id={id} title={title} />;
                 })
             }
-        </div>
+        </>
     );
-}
+};
 
-export default SidebarList
+export default ContextList
