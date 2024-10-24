@@ -17,6 +17,8 @@ class Dialogue extends Model<DialogueAttributes, DialogueCreationAttributes> imp
     public speaker!: string;
     public content!: string;
     public conversationId!: number;
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
 
     // 관계 정의
     static associate(models: any) {

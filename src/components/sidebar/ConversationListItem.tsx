@@ -1,4 +1,5 @@
 import React from "react"
+import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button"
 
 interface SidebarLisItemProps {
@@ -6,15 +7,17 @@ interface SidebarLisItemProps {
     title: string;
 }
 
-const ContextListItem: React.FC<SidebarLisItemProps> = ({ id, title }) => {
+const ConversationListItem: React.FC<SidebarLisItemProps> = ({ id, title }) => {
+    const navigate = useNavigate();
+
     return (
         <Button
             text={title}
             color="#27374D"
             backgroundcolor="#DDE6ED"
-            onClick={() => console.log(`id : ${id}`)}
+            onClick={() => navigate(`/conversation/${id}`)}
         />
     );
 }
 
-export default ContextListItem;
+export default ConversationListItem;

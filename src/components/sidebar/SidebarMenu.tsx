@@ -3,11 +3,13 @@ import { useMenu } from "../../context/MenuContext";
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import Button from '../ui/Button';
-import SidebarList from './ContextList';
 
 const Menu = styled.div`
-  width: 100%;
   text-align: left;
+
+  & :nth-child(3) {
+    margin-bottom: 20px;
+  }
 
   & button:hover {
     border: 1px solid #DDE6ED;
@@ -17,7 +19,7 @@ const Menu = styled.div`
 
 const SidebarMenu: React.FC = () => {
   const { setCategory } = useMenu();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <Menu>
@@ -35,7 +37,7 @@ const SidebarMenu: React.FC = () => {
         color="#DDE6ED"
         onClick={() => {
           setCategory("conversation");
-          navigate("/conversation");
+          // navigate("/conversation");
         }}
       />
       <Button
@@ -44,10 +46,9 @@ const SidebarMenu: React.FC = () => {
         color="#DDE6ED"
         onClick={() => {
           setCategory("note");
-          navigate("/note");
+          // navigate("/note");
         }}
       />
-      <SidebarList />
     </Menu>
   );
 };

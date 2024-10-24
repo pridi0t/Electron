@@ -1,21 +1,16 @@
 import Conversation from "../models/Conversation";
 import Dialogue from "../models/Dialogue";
-import { ConversationTitleButtonInfo } from "../types/tApi";
+import { ConversationTitleButtonInfo, DialogueInfo } from "../types/tApi";
 
 // 대화 목록 리스트 로드
 async function loadConversationTitleList(): Promise<ConversationTitleButtonInfo[]>{
     try {
-        const result: ConversationTitleButtonInfo[] = [];
         const conversations = await Conversation.findAll();
-        if (!conversations) {
-            return [];
-        }
-        conversations.forEach((convData: Conversation) => {
-            result.push({
-                id: convData.dataValues.id.toString(),
-                title: convData.dataValues.title
-            });
-        });
+        const result = conversations.map((convData: Conversation) => ({
+            id: convData.id.toString(),
+            title: convData.title
+        }));
+
         return result;
     } catch (err) {
         console.error("[ERROR/DB] loadConversationList Error", err);
@@ -24,15 +19,17 @@ async function loadConversationTitleList(): Promise<ConversationTitleButtonInfo[
 }
 
 // 대화 상세보기
-async function loadDialogue(id: number): Promise<Dialogue[]> {
+async function loadDialogue(id: number): Promise<DialogueInfo[]> {
     try {
-        const dialogue = await Dialogue.findAll({
-            where: { conversationId: id }
+        const dialogues = await Dialogue.findAll({
+            where: { conversationId: id },
         });
-        if (dialogue === undefined) {
-            throw new Error("대화를 찾을 수 없습니다."); // 노트가 없는 경우 처리
-        }
-        return dialogue;
+        const result = dialogues.map((dialogue: Dialogue) => ({
+                id: dialogue.id.toString(),
+                speaker: dialogue.speaker,
+                content: dialogue.content,
+        }));
+        return result;
     } catch (err) {
         console.error("[ERROR/DB] loadDialogue Error", err);
         throw err;

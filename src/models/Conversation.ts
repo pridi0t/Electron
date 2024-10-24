@@ -12,6 +12,8 @@ interface ConversationCreationAttributes extends Optional<ConversationAttributes
 class Conversation extends Model<ConversationAttributes, ConversationCreationAttributes> implements ConversationAttributes {
     public id!: number;
     public title!: string;
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
 
     // 관계 설정
     static associate(models: any) {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import ContextListItem from "./ContextListItem";
+import ConversationListItem from "./ConversationListItem";
 import { ConversationTitleButtonInfo } from "../../types/tApi";
 
-const ContextList: React.FC = () => {
+const ConversationList: React.FC = () => {
     // 대화 목록을 저장할 상태
     const [convList, setConvList] = useState<ConversationTitleButtonInfo[]>([]);
 
@@ -20,11 +20,11 @@ const ContextList: React.FC = () => {
         <>
             {
                 convList.map(({id, title}) => {
-                    return <ContextListItem key={id} id={id} title={title} />;
+                    return <ConversationListItem key={id} id={id} title={title} />;
                 })
             }
         </>
     );
 };
 
-export default ContextList
+export default ConversationList;
